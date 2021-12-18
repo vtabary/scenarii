@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="shadow sm:rounded-md sm:overflow-hidden">
+    <div class="px-4 py-5 bg-white sm:p-6 space-y-6">
+      <div>
+        <h3 class="text-lg font-medium leading-6 text-gray-900">
+          Use a local file
+        </h3>
+        <p class="text-sm text-gray-500 mt-1 italic">
+          Select a file on your computer to upload or drop it.
+        </p>
+      </div>
+
+      <scenarii-file-upload
+        name="file"
+        formControlName="file"
+        [extensions]="['csv']"
+      ></scenarii-file-upload>
+
+      <div>
+        <h3 class="text-lg font-medium leading-6 text-gray-900">
+          Or a remote file
+        </h3>
+        <p class="text-sm text-gray-500 mt-1 italic">
+          Fill an URL to download a remote CSV file.
+        </p>
+      </div>
+
+      <div class="">
+        <div class="mt-1 flex rounded-md shadow-sm">
+          <input
+            type="text"
+            name="company-website"
+            id="company-website"
+            class="focus:ring-gray-500 focus:border-gray-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
+            placeholder="http://www.example.com"
+            formControlName="url"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+      <button
+        type="submit"
+        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-200"
+        [disabled]="!form.valid"
+      >
+        Upload
+      </button>
+    </div>
+  </div>
+</form>

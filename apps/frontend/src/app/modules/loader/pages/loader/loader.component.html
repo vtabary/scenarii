@@ -1,0 +1,18 @@
+<div class="flex flex-col flex-auto">
+  <scenarii-title title="Load a file"></scenarii-title>
+
+  <main class="p-3 flex-auto">
+    <scenarii-status (isRunning)="isRunning = $event"></scenarii-status>
+
+    <ng-container *ngIf="!isRunning; else reset">
+      <div class="md:grid md:grid-cols-2 md:gap-6">
+        <scenarii-csv-opener></scenarii-csv-opener>
+        <scenarii-file-history></scenarii-file-history>
+      </div>
+    </ng-container>
+
+    <ng-template #reset>
+      <scenarii-reset></scenarii-reset>
+    </ng-template>
+  </main>
+</div>

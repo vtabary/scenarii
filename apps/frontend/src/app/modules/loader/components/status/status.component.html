@@ -1,0 +1,10 @@
+<div
+  class="mb-3 bg-blue-50 border-0 border-gray-800 p-3 rounded-md shadow-sm text-gray-800"
+>
+  <ng-container *ngIf="isRunning | async; else noFile">
+    A file is currently loaded and used. You can reste the progression by
+    clicking on the button below.
+  </ng-container>
+
+  <ng-template #noFile> To start a test, you need to load a file. </ng-template>
+</div>

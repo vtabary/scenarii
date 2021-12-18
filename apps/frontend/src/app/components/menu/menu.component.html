@@ -1,0 +1,45 @@
+<aside
+  class="flex flex-col items-center text-gray-50 shadow h-full bg-gray-800"
+>
+  <ul>
+    <!-- Items Section -->
+    <li class="hover:bg-gray-700">
+      <a
+        routerLink="/load"
+        routerLinkActive="text-orange-500"
+        class="h-16 px-6 flex flex justify-center items-center w-full focus:text-orange-500"
+      >
+        <fa-icon [icon]="faFileImport"></fa-icon>
+      </a>
+    </li>
+
+    <li class="hover:bg-gray-700" *ngIf="isRunning$ | async">
+      <a
+        routerLink="/run"
+        routerLinkActive="text-orange-500"
+        class="h-16 px-6 flex flex justify-center items-center w-full focus:text-orange-500"
+      >
+        <fa-icon [icon]="faPlay"></fa-icon>
+      </a>
+    </li>
+
+    <li class="hover:bg-gray-700" *ngIf="isRunning$ | async">
+      <a
+        routerLink="/reports"
+        routerLinkActive="text-orange-500"
+        class="h-16 px-6 flex flex justify-center items-center w-full focus:text-orange-500"
+      >
+        <fa-icon [icon]="faChartBar"></fa-icon>
+      </a>
+    </li>
+  </ul>
+
+  <div class="mt-auto h-16 flex items-center w-full hover:bg-gray-700">
+    <a
+      routerLink="/"
+      class="h-16 px-6 flex flex justify-center items-center w-full focus:text-orange-500"
+    >
+      <fa-icon [icon]="faQuestionCircle"></fa-icon>
+    </a>
+  </div>
+</aside>

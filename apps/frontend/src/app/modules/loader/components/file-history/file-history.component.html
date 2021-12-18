@@ -1,0 +1,22 @@
+<div class="shadow sm:rounded-md sm:overflow-hidden">
+  <div class="px-4 py-5 bg-white sm:p-6 space-y-6">
+    <div>
+      <h3 class="text-lg font-medium leading-6 text-gray-900">
+        Select a file in your URL history
+      </h3>
+      <p class="text-sm text-gray-500 mt-1 italic">
+        We can only keep track of remote URL for now.
+      </p>
+    </div>
+
+    <ul class="space-y-1" *ngIf="urls.length > 0; else noUrl">
+      <li *ngFor="let url of urls" class="list-none">{{ url }}</li>
+    </ul>
+
+    <ng-template #noUrl>
+      <div class="text-gray-500 italic text-center text-sm py-6">
+        No URL yet in your history
+      </div>
+    </ng-template>
+  </div>
+</div>
