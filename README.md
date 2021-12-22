@@ -1,5 +1,8 @@
 # Scenarii
 
+![Test status](https://github.com/vtabary/scenarii/workflows/Test/badge.svg)
+![LICENSE](https://img.shields.io/github/license/vtabary/scenarii)
+
 This project aims to help the developer to do e2e testing manually on their applications.
 
 ## CSV details
