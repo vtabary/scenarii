@@ -2215,9 +2215,9 @@
     eslint-visitor-keys "^3.0.0"
 
 "@vtabary/keepachangelog-cli@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@vtabary/keepachangelog-cli/-/keepachangelog-cli-0.2.0.tgz#12ec802308d0cb0767f8c4a51557e7d675ec126f"
-  integrity sha512-Qv1WRb/D+kcmlZ4i1nRpFVOsQA5c3EcKx5DwGGf8lpLEmhN6iswTSLBErhPiuC/UwEkVte2SjULY/6pvqL3/nA==
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@vtabary/keepachangelog-cli/-/keepachangelog-cli-0.2.1.tgz#7e589a429e8069c1a1c52ed6cff012e2ea8fad90"
+  integrity sha512-KhH+wONjCg4DI4skf+XRoRhiinkDWi/onOM7OAtLpdTOMPPclT2fvqPW4f8/9wmAI+nJf6KhH/1UpZXb02orcw==
   dependencies:
     commander "^8"
 
