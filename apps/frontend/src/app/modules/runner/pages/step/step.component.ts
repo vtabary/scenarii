@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import {
-  IScenario,
   ReportsRegistryService,
   ScenariiRegistryService,
 } from '../../../shared/public-api';
