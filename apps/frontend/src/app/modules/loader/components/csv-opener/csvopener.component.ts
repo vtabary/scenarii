@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { IScenario, ScenariiRegistryService } from '../../../shared/public-api';
 import {
   atLeastOneOf,
@@ -23,12 +28,7 @@ export class CSVOpenerComponent {
   ) {
     this.form = formBuilder.group(
       {
-        url: [
-          '',
-          Validators.pattern(
-            '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'
-          ),
-        ],
+        url: ['', Validators.pattern('https?://.{2,}')],
         file: [
           null,
           [
@@ -47,6 +47,14 @@ export class CSVOpenerComponent {
         ],
       }
     );
+  }
+
+  public get url(): AbstractControl | null {
+    return this.form.get('url');
+  }
+
+  public get file(): AbstractControl | null {
+    return this.form.get('file');
   }
 
   public onSubmit() {

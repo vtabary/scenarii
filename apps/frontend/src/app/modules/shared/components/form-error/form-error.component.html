@@ -1,0 +1,14 @@
+<div
+  *ngIf="
+    errorName &&
+    control &&
+    control &&
+    control.invalid &&
+    (control.dirty || control.touched)
+  "
+  class="text-red-500"
+>
+  <div *ngIf="control.errors?.[errorName]">
+    {{ message }}
+  </div>
+</div>
