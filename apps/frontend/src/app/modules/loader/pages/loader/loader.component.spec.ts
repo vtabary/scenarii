@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../../shared/shared.module';
 import { CSVOpenerComponent } from '../../components/csv-opener/csvopener.component';
 import { FileHistoryComponent } from '../../components/file-history/file-history.component';
@@ -23,7 +24,7 @@ describe('LoaderComponent', () => {
         FileUploadComponent,
         ExtensionListPipe,
       ],
-      imports: [ReactiveFormsModule, SharedModule],
+      imports: [ReactiveFormsModule, SharedModule, RouterTestingModule],
     }).compileComponents();
   });
 

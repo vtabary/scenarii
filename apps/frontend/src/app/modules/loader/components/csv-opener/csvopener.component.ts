@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { IScenario, ScenariiRegistryService } from '../../../shared/public-api';
 import {
   atLeastOneOf,
@@ -12,7 +15,9 @@ import {
   requiredFileType,
 } from '../../helpers/custom-validators/custom-validators';
 import { CSVParserService } from '../../services/csvparser/csvparser.service';
+import { RemoteFileHistoryService } from '../../services/remote-file-history/remote-file-history.service';
 
+@UntilDestroy()
 @Component({
   selector: 'scenarii-csv-opener',
   templateUrl: './csvopener.component.html',
@@ -20,11 +25,15 @@ import { CSVParserService } from '../../services/csvparser/csvparser.service';
 })
 export class CSVOpenerComponent {
   public form: FormGroup;
+  public faTimesCircle = faTimesCircle;
 
   constructor(
     formBuilder: FormBuilder,
     private csvParser: CSVParserService,
-    private registry: ScenariiRegistryService
+    private registry: ScenariiRegistryService,
+    private fileHistory: RemoteFileHistoryService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.form = formBuilder.group(
       {
@@ -47,6 +56,14 @@ export class CSVOpenerComponent {
         ],
       }
     );
+
+    this.route.queryParams.pipe(untilDestroyed(this)).subscribe((params) => {
+      if (!params['url']) {
+        return;
+      }
+
+      this.form.patchValue({ url: params['url'] });
+    });
   }
 
   public get url(): AbstractControl | null {
@@ -62,16 +79,33 @@ export class CSVOpenerComponent {
       ? this.useLocalFile(this.form.value.file)
       : this.useRemoteUrl(this.form.value.url);
   }
+  public onClearUrl() {
+    if (!this.url) {
+      return;
+    }
 
+    this.url.reset();
+    this.router.navigateByUrl('/load');
+  }
+
+  /**
+   * Parse and save the file from the local file.
+   */
   private useLocalFile(file: File) {
     this.csvParser.parseFile<IScenario>(file).subscribe({
       next: (data) => this.registry.reset(data),
     });
   }
 
+  /**
+   * Parse and save the file from the remote URL.
+   */
   private useRemoteUrl(url: string) {
     this.csvParser.parseURL<IScenario>(url).subscribe({
-      next: (data) => this.registry.reset(data),
+      next: (data) => {
+        this.registry.reset(data);
+        this.fileHistory.add(url);
+      },
     });
   }
 }

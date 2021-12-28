@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable, startWith } from 'rxjs';
+import { RemoteFileHistoryService } from '../../services/remote-file-history/remote-file-history.service';
 
 @Component({
   selector: 'scenarii-file-history',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./file-history.component.css'],
 })
 export class FileHistoryComponent {
-  public urls: string[] = [];
+  public history$: Observable<string[]>;
+
+  constructor(private fileHistory: RemoteFileHistoryService) {
+    this.history$ = this.fileHistory.historyChanged.pipe(
+      startWith(fileHistory.list())
+    );
+  }
 }

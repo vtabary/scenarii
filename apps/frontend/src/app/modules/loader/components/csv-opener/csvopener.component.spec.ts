@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../../shared/shared.module';
 import { ExtensionListPipe } from '../../pipes/extension-list/extension-list.pipe';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
@@ -17,7 +18,7 @@ describe('CSVOpenerComponent', () => {
         FileUploadComponent,
         ExtensionListPipe,
       ],
-      imports: [ReactiveFormsModule, SharedModule],
+      imports: [ReactiveFormsModule, SharedModule, RouterTestingModule],
     }).compileComponents();
   });
 

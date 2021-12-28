@@ -1,0 +1,16 @@
+<ng-container *ngIf="url">
+  <a
+    class="cursor-pointer text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+    routerLink="/load"
+    [queryParams]="{ url: url }"
+    >{{ url }}</a
+  >
+  <span class="text-sm italic ml-2 text-gray-400"
+    >(<button
+      class="cursor-pointer italic text-indigo-400 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+      (click)="onRemove(url)"
+    >
+      remove</button
+    >)</span
+  >
+</ng-container>

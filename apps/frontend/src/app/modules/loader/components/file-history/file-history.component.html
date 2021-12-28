@@ -9,14 +9,21 @@
       </p>
     </div>
 
-    <ul class="space-y-1" *ngIf="urls.length > 0; else noUrl">
-      <li *ngFor="let url of urls" class="list-none">{{ url }}</li>
-    </ul>
+    <ng-container *ngIf="history$ | async as history">
+      <ol
+        class="space-y-1 list-decimal mx-4"
+        *ngIf="history.length > 0; else noUrl"
+      >
+        <li *ngFor="let url of history">
+          <scenarii-file-history-item [url]="url"></scenarii-file-history-item>
+        </li>
+      </ol>
 
-    <ng-template #noUrl>
-      <div class="text-gray-500 italic text-center text-sm py-6">
-        No URL yet in your history
-      </div>
-    </ng-template>
+      <ng-template #noUrl>
+        <div class="text-gray-500 italic text-center text-sm py-6">
+          No URL yet in your history
+        </div>
+      </ng-template>
+    </ng-container>
   </div>
 </div>

@@ -11,6 +11,7 @@ import { FileHistoryComponent } from './components/file-history/file-history.com
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { ExtensionListPipe } from './pipes/extension-list/extension-list.pipe';
 import { DragAndDropDirective } from './directives/drag-and-drop/drag-and-drop.directive';
+import { FileHistoryItemComponent } from './components/file-history-item/file-history-item.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop/drag-and-drop.d
     FileUploadComponent,
     ExtensionListPipe,
     DragAndDropDirective,
+    FileHistoryItemComponent,
   ],
   imports: [
     CommonModule,

@@ -42,8 +42,6 @@ nx build frontend
 
 ## TODO
 
-- Fix remote URL upload
-- Support remote URL history
 - Let the user add some comments on a failed scenario
 - Add reports depending on categories
 - Let the user exports the reports
