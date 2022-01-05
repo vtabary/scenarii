@@ -1,6 +1,6 @@
 import { Component, Output } from '@angular/core';
 import { map, Observable, startWith } from 'rxjs';
-import { ScenariiRegistryService } from '../../../shared/public-api';
+import { ScenariosRegistryService } from '../../../shared/public-api';
 
 @Component({
   selector: 'scenarii-status',
@@ -11,9 +11,9 @@ export class StatusComponent {
   @Output()
   public isRunning: Observable<boolean>;
 
-  constructor(scenariiRegistry: ScenariiRegistryService) {
-    this.isRunning = scenariiRegistry.registryUpdated.pipe(
-      startWith(scenariiRegistry.getAll()),
+  constructor(scenarios: ScenariosRegistryService) {
+    this.isRunning = scenarios.registryUpdated.pipe(
+      startWith(scenarios.getAll()),
       map((registry) => registry.length > 0)
     );
   }

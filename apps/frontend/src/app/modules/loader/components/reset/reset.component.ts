@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {
-  ScenariiRegistryService,
+  ScenariosRegistryService,
   ReportsRegistryService,
 } from '../../../shared/public-api';
 
@@ -11,12 +11,12 @@ import {
 })
 export class ResetComponent {
   constructor(
-    private scenariiRegistry: ScenariiRegistryService,
-    private reportsScenarii: ReportsRegistryService
+    private scenarios: ScenariosRegistryService,
+    private reports: ReportsRegistryService
   ) {}
 
   public onReset() {
-    this.scenariiRegistry.reset([]);
-    this.reportsScenarii.reset([]);
+    this.scenarios.reset([]);
+    this.reports.reset([]);
   }
 }

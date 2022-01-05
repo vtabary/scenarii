@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import {
   ReportsRegistryService,
-  ScenariiRegistryService,
+  ScenariosRegistryService,
 } from '../../../shared/public-api';
 import { IResolvedScenario } from '../../models/scenario';
 
@@ -20,8 +20,8 @@ export class StepComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private scenariiRegistry: ScenariiRegistryService,
-    private reportsRegistry: ReportsRegistryService,
+    private scenarios: ScenariosRegistryService,
+    private reports: ReportsRegistryService,
     private router: Router
   ) {
     this.scenario$ = this.activatedRoute.data.pipe(
@@ -32,7 +32,7 @@ export class StepComponent {
       })
     );
 
-    this.length = this.scenariiRegistry.length;
+    this.length = this.scenarios.length;
   }
 
   public onValidate(): void {
@@ -40,7 +40,7 @@ export class StepComponent {
       return;
     }
 
-    this.reportsRegistry.set({
+    this.reports.set({
       scenarioId: this.scenario.id,
       comment: '',
       valid: true,
@@ -54,7 +54,7 @@ export class StepComponent {
       return;
     }
 
-    this.reportsRegistry.set({
+    this.reports.set({
       scenarioId: this.scenario.id,
       comment: '',
       valid: false,

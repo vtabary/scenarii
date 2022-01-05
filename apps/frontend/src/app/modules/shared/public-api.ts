@@ -7,7 +7,7 @@ export { IReport } from './models/report';
 /**
  * Services
  */
-export { ScenariiRegistryService } from './services/scenarii-registry/scenarii-registry.service';
+export { ScenariosRegistryService } from './services/scenarios-registry/scenarios-registry.service';
 export { ReportsRegistryService } from './services/reports-registry/reports-registry.service';
 export { DataManagerService } from './services/data-manager/data-manager.service';
 

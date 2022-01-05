@@ -4,7 +4,7 @@ import { IReport } from '../../../shared/models/report';
 import {
   IScenario,
   ReportsRegistryService,
-  ScenariiRegistryService,
+  ScenariosRegistryService,
 } from '../../../shared/public-api';
 import { getStatusReport, IStatusReport } from '../helpers/results';
 
@@ -31,10 +31,10 @@ export class CategoryChartComponent {
   };
 
   constructor(
-    scenariiRegistry: ScenariiRegistryService,
-    private reportsRegistry: ReportsRegistryService
+    scenarios: ScenariosRegistryService,
+    private reports: ReportsRegistryService
   ) {
-    const categories = scenariiRegistry.getAllByCategories();
+    const categories = scenarios.getAllByCategories();
 
     this.chartData.datasets = this.getCategoryStatuses(categories);
     this.chartData.labels = this.removeEmptyCategory(Object.keys(categories));
@@ -86,13 +86,13 @@ export class CategoryChartComponent {
     );
   }
 
-  private getCategoryStatus(categoryScenarii: IScenario[]): IStatusReport {
-    const categoryReports = categoryScenarii
-      .map((scenario) => this.reportsRegistry.get(scenario.id))
+  private getCategoryStatus(categoryScenarios: IScenario[]): IStatusReport {
+    const categoryReports = categoryScenarios
+      .map((scenario) => this.reports.get(scenario.id))
       .filter(
         (report): report is IReport & { index: number } => report !== undefined
       );
 
-    return getStatusReport(categoryReports, categoryScenarii.length);
+    return getStatusReport(categoryReports, categoryScenarios.length);
   }
 }

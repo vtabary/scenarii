@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import {
   ReportsRegistryService,
-  ScenariiRegistryService,
+  ScenariosRegistryService,
 } from '../../../shared/public-api';
 import { getStatusReport } from '../helpers/results';
 
@@ -22,13 +22,10 @@ export class StatusChartComponent {
   };
 
   constructor(
-    scenariiRegistry: ScenariiRegistryService,
-    reportsRegistry: ReportsRegistryService
+    scenarios: ScenariosRegistryService,
+    reports: ReportsRegistryService
   ) {
-    const statusReport = getStatusReport(
-      reportsRegistry.getAll(),
-      scenariiRegistry.length
-    );
+    const statusReport = getStatusReport(reports.getAll(), scenarios.length);
 
     this.chartData.labels = statusReport.map((report) => report.label);
     this.chartData.datasets = statusReport.reduce(

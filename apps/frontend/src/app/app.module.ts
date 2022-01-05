@@ -5,17 +5,17 @@ import { AppComponent } from './components/app/app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import {
   ReportsRegistryService,
-  ScenariiRegistryService,
+  ScenariosRegistryService,
 } from './modules/shared/public-api';
 import { SharedModule } from './modules/shared/shared.module';
 
 const factories = {
   loadData: (
-    scenarii: ScenariiRegistryService,
+    scenarios: ScenariosRegistryService,
     reports: ReportsRegistryService
   ): (() => void) => {
     const f = () => {
-      scenarii.load();
+      scenarios.load();
       reports.load();
     };
     return f;
@@ -28,7 +28,7 @@ const factories = {
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [ScenariiRegistryService, ReportsRegistryService],
+      deps: [ScenariosRegistryService, ReportsRegistryService],
       useFactory: factories.loadData,
     },
   ],

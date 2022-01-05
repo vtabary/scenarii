@@ -6,9 +6,9 @@ import { DataManagerService } from '../data-manager/data-manager.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ScenariiRegistryService {
+export class ScenariosRegistryService {
   public registryUpdated = new BehaviorSubject<IScenario[]>([]);
-  private scenarii: IScenario[] = [];
+  private scenarios: IScenario[] = [];
   private scenarioByIds: Map<string, IScenario> = new Map();
 
   constructor(private dataManager: DataManagerService) {}
@@ -28,22 +28,22 @@ export class ScenariiRegistryService {
 
     return {
       ...scenario,
-      index: this.scenarii.indexOf(scenario),
+      index: this.scenarios.indexOf(scenario),
     };
   }
 
   /**
-   * Return all the scenarii
+   * Return all the scenarios
    */
   public getAll(): IScenario[] {
-    return [...this.scenarii];
+    return [...this.scenarios];
   }
 
   /**
    * Return all the scenarios by category
    */
   public getAllByCategories(): { [category: string]: IScenario[] } {
-    return this.scenarii.reduce((acc, scenario) => {
+    return this.scenarios.reduce((acc, scenario) => {
       acc[scenario.category || ''] = acc[scenario.category || ''] || [];
       acc[scenario.category || ''].push(scenario);
       return acc;
@@ -54,7 +54,7 @@ export class ScenariiRegistryService {
    * Check the data manager to see if there is some scenario data in it
    */
   public load(): boolean {
-    const data = this.dataManager.get<IScenario[]>('scenarii');
+    const data = this.dataManager.get<IScenario[]>('scenarios');
     if (!data || data.length === 0) {
       return false;
     }
@@ -64,11 +64,11 @@ export class ScenariiRegistryService {
   }
 
   /**
-   * Clear the registry and set the new scenarii.
+   * Clear the registry and set the new scenarios.
    */
-  public reset(scenarii: IScenario[]): void {
+  public reset(scenarios: IScenario[]): void {
     this.clear();
-    this.addScenarii(scenarii);
+    this.addScenarios(scenarios);
   }
 
   /**
@@ -84,8 +84,8 @@ export class ScenariiRegistryService {
     if (!scenario) {
       return undefined;
     }
-    console.log(scenario.index, this.scenarii[scenario.index + 1]);
-    return this.get(this.scenarii[scenario.index + 1]?.id);
+    console.log(scenario.index, this.scenarios[scenario.index + 1]);
+    return this.get(this.scenarios[scenario.index + 1]?.id);
   }
 
   /**
@@ -102,21 +102,21 @@ export class ScenariiRegistryService {
       return undefined;
     }
 
-    return this.get(this.scenarii[scenario.index - 1]?.id);
+    return this.get(this.scenarios[scenario.index - 1]?.id);
   }
 
   /**
    * Get the number of scenarios in the registry
    */
   public get length(): number {
-    return this.scenarii.length;
+    return this.scenarios.length;
   }
 
-  private addScenarii(scenarii: IScenario[]): void {
-    scenarii.forEach((scenario) => this.addScenario(scenario));
+  private addScenarios(scenarios: IScenario[]): void {
+    scenarios.forEach((scenario) => this.addScenario(scenario));
 
     this.registryUpdated.next(this.getAll());
-    this.dataManager.set('scenarii', this.scenarii);
+    this.dataManager.set('scenarii', this.scenarios);
   }
 
   private addScenario(scenario: IScenario): void {
@@ -129,12 +129,12 @@ export class ScenariiRegistryService {
       { category: null, subcategory: null, comment: null },
       scenario
     );
-    this.scenarii.push(item);
+    this.scenarios.push(item);
     this.scenarioByIds.set(scenario.id, item);
   }
 
   private clear(): void {
-    this.scenarii = [];
+    this.scenarios = [];
     this.scenarioByIds.clear();
     this.dataManager.delete('scenarii');
     this.registryUpdated.next(this.getAll());

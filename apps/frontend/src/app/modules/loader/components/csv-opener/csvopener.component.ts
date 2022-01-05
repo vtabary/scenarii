@@ -8,7 +8,10 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { IScenario, ScenariiRegistryService } from '../../../shared/public-api';
+import {
+  IScenario,
+  ScenariosRegistryService,
+} from '../../../shared/public-api';
 import {
   atLeastOneOf,
   onlyOneOf,
@@ -30,7 +33,7 @@ export class CSVOpenerComponent {
   constructor(
     formBuilder: FormBuilder,
     private csvParser: CSVParserService,
-    private registry: ScenariiRegistryService,
+    private scenarios: ScenariosRegistryService,
     private fileHistory: RemoteFileHistoryService,
     private route: ActivatedRoute,
     private router: Router
@@ -93,7 +96,7 @@ export class CSVOpenerComponent {
    */
   private useLocalFile(file: File) {
     this.csvParser.parseFile<IScenario>(file).subscribe({
-      next: (data) => this.registry.reset(data),
+      next: (data) => this.scenarios.reset(data),
     });
   }
 
@@ -103,7 +106,7 @@ export class CSVOpenerComponent {
   private useRemoteUrl(url: string) {
     this.csvParser.parseURL<IScenario>(url).subscribe({
       next: (data) => {
-        this.registry.reset(data);
+        this.scenarios.reset(data);
         this.fileHistory.add(url);
       },
     });

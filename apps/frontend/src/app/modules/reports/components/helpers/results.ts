@@ -23,7 +23,7 @@ export type IStatusReport = [
 
 export const getStatusReport = (
   reports: IReport[],
-  scenariiLength: number
+  scenariosLength: number
 ): IStatusReport => {
   return reports.reduce(
     (acc, report) => {
@@ -46,7 +46,7 @@ export const getStatusReport = (
       },
       {
         label: 'Pending',
-        data: [scenariiLength - reports.length],
+        data: [scenariosLength - reports.length],
         backgroundColor: '#FBBF24',
         hoverBackgroundColor: '#FCD34D',
       },
