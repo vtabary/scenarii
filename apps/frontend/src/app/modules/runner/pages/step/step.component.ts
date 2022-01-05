@@ -66,8 +66,9 @@ export class StepComponent {
   private goToNextPage(): void {
     if (this.scenario?.next?.id) {
       this.router.navigate(['/run', this.scenario.next?.id]);
-    } else {
-      this.router.navigateByUrl('/run/done');
+      return;
     }
+
+    this.router.navigateByUrl('/run/done');
   }
 }

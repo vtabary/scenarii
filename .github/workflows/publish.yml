@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '14'
       - run: yarn install
-      - run: npx nx build frontend --base-href=scenarii
+      - run: npx nx build frontend --base-href=/scenarii
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.7
         with:

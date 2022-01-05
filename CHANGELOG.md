@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add a chart to display status by category
+
+### Fixed
+
+- Change the chart colors
+- Load reports at bootstrap
+
 ## [0.2.0] - 2021-12-28
 
 ### Fixed

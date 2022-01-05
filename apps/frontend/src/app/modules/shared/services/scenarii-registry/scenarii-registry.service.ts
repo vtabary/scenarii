@@ -9,7 +9,7 @@ import { DataManagerService } from '../data-manager/data-manager.service';
 export class ScenariiRegistryService {
   public registryUpdated = new BehaviorSubject<IScenario[]>([]);
   private scenarii: IScenario[] = [];
-  private scenarioByIds: { [id: string]: IScenario } = {};
+  private scenarioByIds: Map<string, IScenario> = new Map();
 
   constructor(private dataManager: DataManagerService) {}
 
@@ -21,13 +21,14 @@ export class ScenariiRegistryService {
         index: number;
       })
     | undefined {
-    if (!this.scenarioByIds[id]) {
+    const scenario = this.scenarioByIds.get(id);
+    if (!scenario) {
       return undefined;
     }
 
     return {
-      ...this.scenarioByIds[id],
-      index: this.scenarii.indexOf(this.scenarioByIds[id]),
+      ...scenario,
+      index: this.scenarii.indexOf(scenario),
     };
   }
 
@@ -36,6 +37,17 @@ export class ScenariiRegistryService {
    */
   public getAll(): IScenario[] {
     return [...this.scenarii];
+  }
+
+  /**
+   * Return all the scenarios by category
+   */
+  public getAllByCategories(): { [category: string]: IScenario[] } {
+    return this.scenarii.reduce((acc, scenario) => {
+      acc[scenario.category || ''] = acc[scenario.category || ''] || [];
+      acc[scenario.category || ''].push(scenario);
+      return acc;
+    }, {} as { [category: string]: IScenario[] });
   }
 
   /**
@@ -72,7 +84,7 @@ export class ScenariiRegistryService {
     if (!scenario) {
       return undefined;
     }
-
+    console.log(scenario.index, this.scenarii[scenario.index + 1]);
     return this.get(this.scenarii[scenario.index + 1]?.id);
   }
 
@@ -112,13 +124,18 @@ export class ScenariiRegistryService {
       return;
     }
 
-    this.scenarii.push(scenario);
-    this.scenarioByIds[scenario.id] = scenario;
+    // Force the category, the subcategory and the comment to be string or null
+    const item = Object.assign(
+      { category: null, subcategory: null, comment: null },
+      scenario
+    );
+    this.scenarii.push(item);
+    this.scenarioByIds.set(scenario.id, item);
   }
 
   private clear(): void {
     this.scenarii = [];
-    this.scenarioByIds = {};
+    this.scenarioByIds.clear();
     this.dataManager.delete('scenarii');
     this.registryUpdated.next(this.getAll());
   }

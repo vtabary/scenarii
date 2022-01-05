@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ChartData, ChartType } from 'chart.js';
+import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import {
   ReportsRegistryService,
   ScenariiRegistryService,
 } from '../../../shared/public-api';
+import { getStatusReport } from '../helpers/results';
 
 @Component({
   selector: 'scenarii-status-chart',
@@ -11,26 +12,40 @@ import {
   styleUrls: ['./status-chart.component.css'],
 })
 export class StatusChartComponent {
-  public chartType: ChartType = 'doughnut';
-  public chartData: ChartData<'doughnut'> = {
-    labels: ['Valid', 'Failed', 'Pending'],
+  public chartType: ChartType = 'pie';
+  public chartData: ChartData<'pie'> = {
+    labels: [],
     datasets: [],
+  };
+  public chartOptions: ChartOptions = {
+    responsive: true,
   };
 
   constructor(
     scenariiRegistry: ScenariiRegistryService,
     reportsRegistry: ReportsRegistryService
   ) {
-    const result = reportsRegistry.getAll().reduce(
-      (acc, report) => {
-        const index = report.valid ? 0 : 1;
-        acc[index] = acc[index] + 1;
-        return acc;
-      },
-      [0, 0, 0]
+    const statusReport = getStatusReport(
+      reportsRegistry.getAll(),
+      scenariiRegistry.length
     );
 
-    result[2] = scenariiRegistry.length - reportsRegistry.length;
-    this.chartData.datasets.push({ data: result });
+    this.chartData.labels = statusReport.map((report) => report.label);
+    this.chartData.datasets = statusReport.reduce(
+      (acc, report) => {
+        acc[0].data.push(report.data[0]);
+        acc[0].backgroundColor.push(report.backgroundColor);
+        acc[0].hoverBackgroundColor.push(report.hoverBackgroundColor);
+        return acc;
+      },
+      [
+        {
+          data: [] as number[],
+          backgroundColor: [] as string[],
+          hoverBackgroundColor: [] as string[],
+          hoverBorderWidth: 0,
+        },
+      ]
+    );
   }
 }
