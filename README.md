@@ -42,10 +42,12 @@ nx build frontend
 
 ## TODO
 
+- Sort and filter the list of scenarios
+- Manage and export the scenarios
 - Let the user add some comments on a failed scenario
 - Let the user to export the reports
+- Display a list of scenarios with the user comments
 - Display the scenario dependencies
-- Manage and export the scenarios
 - Add more unit tests
 - Add e2e tests
 - Upload the scenarios to an online service (needs a server and an authentication)

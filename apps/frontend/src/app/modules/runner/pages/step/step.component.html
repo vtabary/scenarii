@@ -3,8 +3,11 @@
   *ngIf="scenario$ | async as scenario; else unknownScenario"
 >
   <scenarii-title
-    title="Scenario {{ scenario.index + 1 }} / {{ length }}"
-  ></scenarii-title>
+    >Scenario
+    <scenarii-badge
+      >{{ scenario.index + 1 }} / {{ length }}</scenarii-badge
+    ></scenarii-title
+  >
 
   <main class="p-3 flex-auto flex flex-col">
     <div class="flex-auto justify-center items-center flex flex-col">

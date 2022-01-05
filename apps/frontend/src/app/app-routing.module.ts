@@ -17,6 +17,7 @@ const routes: Routes = [
       import('./modules/reports/reports.module').then((m) => m.ReportsModule),
     path: 'reports',
   },
+  { path: 'scenarios', loadChildren: () => import('./modules/scenarios/scenarios.module').then(m => m.ScenariosModule) },
   { path: '**', redirectTo: 'load' },
 ];
 

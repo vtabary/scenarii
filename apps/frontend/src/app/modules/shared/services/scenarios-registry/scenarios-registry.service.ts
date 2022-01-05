@@ -116,7 +116,7 @@ export class ScenariosRegistryService {
     scenarios.forEach((scenario) => this.addScenario(scenario));
 
     this.registryUpdated.next(this.getAll());
-    this.dataManager.set('scenarii', this.scenarios);
+    this.dataManager.set('scenarios', this.scenarios);
   }
 
   private addScenario(scenario: IScenario): void {
@@ -136,7 +136,7 @@ export class ScenariosRegistryService {
   private clear(): void {
     this.scenarios = [];
     this.scenarioByIds.clear();
-    this.dataManager.delete('scenarii');
+    this.dataManager.delete('scenarios');
     this.registryUpdated.next(this.getAll());
   }
 }

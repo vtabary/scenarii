@@ -4,6 +4,7 @@ import {
   faQuestionCircle,
   faChartBar,
   faPlay,
+  faListAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { map, Observable } from 'rxjs';
 import { ScenariosRegistryService } from '../../modules/shared/public-api';
@@ -18,6 +19,7 @@ export class MenuComponent {
   public faPlay = faPlay;
   public faQuestionCircle = faQuestionCircle;
   public faChartBar = faChartBar;
+  public faListAlt = faListAlt;
   public isRunning$: Observable<boolean>;
 
   constructor(registry: ScenariosRegistryService) {

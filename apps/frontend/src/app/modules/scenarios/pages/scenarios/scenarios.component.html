@@ -1,0 +1,10 @@
+<ng-container *ngIf="scenarios$ | async as scenarios">
+  <scenarii-title
+    >Scenarios
+    <scenarii-badge>{{ scenarios.length }}</scenarii-badge></scenarii-title
+  >
+  <scenarii-scenario
+    *ngFor="let scenario of scenarios"
+    [scenario]="scenario"
+  ></scenarii-scenario>
+</ng-container>
