@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SharedModule } from '../../../shared/shared.module';
 
 import { ScenariosComponent } from './scenarios.component';
 
@@ -8,9 +9,9 @@ describe('ScenariosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScenariosComponent ]
-    })
-    .compileComponents();
+      declarations: [ScenariosComponent],
+      imports: [SharedModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -5,20 +5,26 @@
 
 This project aims to help the developer to do e2e testing manually on their applications.
 
+## Features
+
+- The user can upload a CSV from a local file or a remote file
+- Let the user select the role of each CSV column
+- The user can follow and check the scenarios one by one
+- Reports are generated from the results
+- All scenarios are listed and can be viewed at once
+
 ## CSV details
 
-The scenarios has to be described inside an CSV file matching this format:
+The CSV file must, at least, have the following columns:
 
-```csv
-id,category,subcategory,dependency,message,comment
-```
+- A **unique identifier** to identify each scenario
+- A **message** to describe the scenario
 
-- The `id` must a unique identifier for the scenario.
-- The `category` specifies the functionnality matching the scenario.
-- The `subcategory` specifies the subfunctionnality matching the scenario.
-- The `dependency` indicates the previous scenario which must be executed before this one.
-- The `message` describe the action the user must do to validate the scenario.
-- The `comment` add some optional details on the scenario like some examples.
+The file can also have the following columns:
+
+- A **category** to group scenarios, and a **subcategory** to be finer grained
+- A **dependency** to express the scenario which should be executed before this one
+- A **comment** to add some optional details on the scenario like some examples, or data to use
 
 The order of the columns is not important. All other columns are ignored.
 

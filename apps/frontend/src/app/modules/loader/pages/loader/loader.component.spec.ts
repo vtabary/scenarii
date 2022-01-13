@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../../shared/shared.module';
-import { CSVOpenerComponent } from '../../components/csv-opener/csvopener.component';
+import { CSVUploaderComponent } from '../../components/csv-uploader/csv-uploader.component';
 import { FileHistoryComponent } from '../../components/file-history/file-history.component';
 import { FileUploadComponent } from '../../components/file-upload/file-upload.component';
 import { StatusComponent } from '../../components/status/status.component';
@@ -20,7 +20,7 @@ describe('LoaderComponent', () => {
         LoaderComponent,
         StatusComponent,
         FileHistoryComponent,
-        CSVOpenerComponent,
+        CSVUploaderComponent,
         FileUploadComponent,
         ExtensionListPipe,
       ],

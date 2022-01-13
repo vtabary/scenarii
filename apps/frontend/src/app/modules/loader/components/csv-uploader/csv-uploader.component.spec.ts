@@ -5,16 +5,16 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ExtensionListPipe } from '../../pipes/extension-list/extension-list.pipe';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 
-import { CSVOpenerComponent } from './csvopener.component';
+import { CSVUploaderComponent } from './csv-uploader.component';
 
-describe('CSVOpenerComponent', () => {
-  let component: CSVOpenerComponent;
-  let fixture: ComponentFixture<CSVOpenerComponent>;
+describe('CSVUploaderComponent', () => {
+  let component: CSVUploaderComponent;
+  let fixture: ComponentFixture<CSVUploaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        CSVOpenerComponent,
+        CSVUploaderComponent,
         FileUploadComponent,
         ExtensionListPipe,
       ],
@@ -23,7 +23,7 @@ describe('CSVOpenerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CSVOpenerComponent);
+    fixture = TestBed.createComponent(CSVUploaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

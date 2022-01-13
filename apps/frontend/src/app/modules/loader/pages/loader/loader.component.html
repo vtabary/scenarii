@@ -5,10 +5,23 @@
     <scenarii-status (isRunning)="isRunning = $event"></scenarii-status>
 
     <ng-container *ngIf="!isRunning; else reset">
-      <div class="md:grid md:grid-cols-2 md:gap-6">
-        <scenarii-csv-opener></scenarii-csv-opener>
-        <scenarii-file-history></scenarii-file-history>
-      </div>
+      <ng-container *ngIf="!currentFile; else csvConfigurator">
+        <div class="md:grid md:grid-cols-2 md:gap-6">
+          <scenarii-csv-uploader
+            (csvUploaded)="currentFile = $event"
+          ></scenarii-csv-uploader>
+          <scenarii-file-history></scenarii-file-history>
+        </div>
+      </ng-container>
+
+      <ng-template #csvConfigurator>
+        <scenarii-csv-configurator
+          [csvContent]="currentFile"
+          (cleared)="onClear()"
+          (configurationUpdated)="onConfigurationUpdated($event)"
+          (scenarios)="onScenarios($event)"
+        ></scenarii-csv-configurator>
+      </ng-template>
     </ng-container>
 
     <ng-template #reset>
