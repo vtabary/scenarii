@@ -1,14 +1,42 @@
-<section *ngIf="scenario" class="shadow-sm m-3 p-3 rounded bg-white">
-  <span class="text-sm text-gray-400 italic">
-    <ng-container *ngIf="scenario.category"
-      ><span>{{ scenario.category }}</span> ></ng-container
-    >
-    <ng-container *ngIf="scenario.subcategory"
-      ><span>{{ scenario.subcategory }}</span> ></ng-container
-    >
-    <span>{{ scenario.id }}</span>
-  </span>
-  <h2 class="ml-2">
-    {{ scenario.message }}
-  </h2>
+<section
+  *ngIf="scenario"
+  class="shadow-sm m-3 p-3 rounded bg-white flex flex-row"
+  [class.bg-red-100]="status === 'error'"
+  [class.bg-green-100]="status === 'success'"
+>
+  <div
+    [ngSwitch]="status"
+    class="m-3 inline-block flex justify-center items-center aspect-square"
+    style="height: 30px"
+  >
+    <fa-icon
+      *ngSwitchCase="'success'"
+      [icon]="faCheck"
+      class="text-green-800"
+    ></fa-icon>
+    <fa-icon
+      *ngSwitchCase="'error'"
+      [icon]="faTimes"
+      class="text-red-800"
+    ></fa-icon>
+    <fa-icon
+      *ngSwitchDefault
+      [icon]="faQuestion"
+      class="text-gray-400"
+    ></fa-icon>
+  </div>
+  <div>
+    <span class="text-sm text-gray-400 italic">
+      <ng-container *ngIf="scenario.category"
+        ><span>{{ scenario.category }}</span> ></ng-container
+      >
+      <ng-container *ngIf="scenario.subcategory"
+        ><span>{{ scenario.subcategory }}</span> ></ng-container
+      >
+      <span>{{ scenario.id }}</span>
+    </span>
+    <h2 class="ml-2">
+      {{ scenario.message }}
+    </h2>
+  </div>
 </section>
