@@ -12,6 +12,7 @@ This project aims to help the developer to do e2e testing manually on their appl
 - The user can follow and check the scenarios one by one
 - Reports are generated from the results
 - All scenarios are listed and can be viewed at once
+- Filter the list of scenarios
 
 ## CSV details
 
@@ -48,12 +49,14 @@ nx build frontend
 
 ## TODO
 
-- Sort and filter the list of scenarios
-- Manage and export the scenarios
+- Export the scenarios into a CSV File
 - Let the user add some comments on a failed scenario
 - Let the user to export the reports
-- Display a list of scenarios with the user comments
+- Add the tester comments to the scenario list
 - Display the scenario dependencies
+- Delete a scenario
+- Edit a scenario
+- Sort the list of scenarios
 - Add more unit tests
 - Add e2e tests
 - Upload the scenarios to an online service (needs a server and an authentication)

@@ -3,6 +3,17 @@
     >Scenarios
     <scenarii-badge>{{ scenarios.length }}</scenarii-badge></scenarii-title
   >
+  <div class="m-3">
+    <form [formGroup]="formGroup">
+      Filters:
+      <select class="text-xs p-1" formControlName="status">
+        <option value="">All</option>
+        <option value="success">Success</option>
+        <option value="error">Error</option>
+        <option value="unknown">Not tested yet</option>
+      </select>
+    </form>
+  </div>
   <scenarii-scenario
     *ngFor="let scenario of scenarios"
     [scenario]="scenario"

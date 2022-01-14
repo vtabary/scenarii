@@ -13,16 +13,19 @@
       *ngSwitchCase="'success'"
       [icon]="faCheck"
       class="text-green-800"
+      title="Success"
     ></fa-icon>
     <fa-icon
       *ngSwitchCase="'error'"
       [icon]="faTimes"
       class="text-red-800"
+      title="Error"
     ></fa-icon>
     <fa-icon
       *ngSwitchDefault
       [icon]="faQuestion"
       class="text-gray-400"
+      title="Unknown"
     ></fa-icon>
   </div>
   <div>

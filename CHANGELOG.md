@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Display report status in scenario list
+- User can filter scenarios by status in scenario list
+
 ## [0.5.0] - 2022-01-13
 
 ### Added
