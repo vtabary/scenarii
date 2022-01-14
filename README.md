@@ -60,7 +60,7 @@ nx build frontend
 
 ## Contributing
 
-See [CONTRIGUTING.md](./CONTRIGUTING.md) file.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) file.
 
 ## License
 
