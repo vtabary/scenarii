@@ -4,8 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     loadChildren: () =>
-      import('./modules/loader/loader.module').then((m) => m.LoaderModule),
-    path: 'load',
+      import('./modules/file-manager/file-manager.module').then(
+        (m) => m.FileManagerModule
+      ),
+    path: 'file',
   },
   {
     loadChildren: () =>
@@ -17,8 +19,14 @@ const routes: Routes = [
       import('./modules/reports/reports.module').then((m) => m.ReportsModule),
     path: 'reports',
   },
-  { path: 'scenarios', loadChildren: () => import('./modules/scenarios/scenarios.module').then(m => m.ScenariosModule) },
-  { path: '**', redirectTo: 'load' },
+  {
+    path: 'scenarios',
+    loadChildren: () =>
+      import('./modules/scenarios/scenarios.module').then(
+        (m) => m.ScenariosModule
+      ),
+  },
+  { path: '**', redirectTo: 'file' },
 ];
 
 @NgModule({

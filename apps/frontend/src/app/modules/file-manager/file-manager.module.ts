@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { LoaderRoutingModule } from './loader-routing.module';
+import { FileManagerRoutingModule } from './file-manager-routing.module';
 import { LoaderComponent } from './pages/loader/loader.component';
 import { StatusComponent } from './components/status/status.component';
 import { ResetComponent } from './components/reset/reset.component';
@@ -32,8 +32,8 @@ import { CSVUploaderComponent } from './components/csv-uploader/csv-uploader.com
   imports: [
     CommonModule,
     SharedModule,
-    LoaderRoutingModule,
+    FileManagerRoutingModule,
     ReactiveFormsModule,
   ],
 })
-export class LoaderModule {}
+export class FileManagerModule {}
