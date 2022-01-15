@@ -14,6 +14,7 @@ import { FileHistoryItemComponent } from './components/file-history-item/file-hi
 import { CSVConfiguratorComponent } from './components/csv-configurator/csv-configurator.component';
 import { CSVConfiguratorFieldComponent } from './components/csv-configurator-field/csv-configurator-field.component';
 import { CSVUploaderComponent } from './components/csv-uploader/csv-uploader.component';
+import { CSVExporterComponent } from './components/csv-exporter/csv-exporter.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CSVUploaderComponent } from './components/csv-uploader/csv-uploader.com
     CSVConfiguratorComponent,
     CSVConfiguratorFieldComponent,
     CSVUploaderComponent,
+    CSVExporterComponent,
   ],
   imports: [
     CommonModule,

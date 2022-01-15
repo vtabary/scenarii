@@ -1,5 +1,5 @@
-id,dependency,message,comment,category,subcategory
-test1,,"This is the first test",,Some functionality,
-test2,test1,"This is a second test",,,
-test3,test2,"This is a third test",,Some functionality,
-test4,test3,"This is the last test",,,
+id;dependency;message;comment;category;subcategory
+test1;;"This is the first test";;Some functionality;
+test2;test1;"This is a second test";;;
+test3;test2;"This is a third test";;Some functionality;
+test4;test3;"This is the last test";;;

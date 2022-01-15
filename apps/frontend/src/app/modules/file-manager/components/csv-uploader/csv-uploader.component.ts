@@ -13,7 +13,7 @@ import {
   onlyOneOf,
   requiredFileType,
 } from '../../helpers/custom-validators/custom-validators';
-import { CSVParserService } from '../../services/csvparser/csvparser.service';
+import { CSVParserService } from '../../services/csv-parser/csv-parser.service';
 import { RemoteFileHistoryService } from '../../services/remote-file-history/remote-file-history.service';
 import { Observable, tap } from 'rxjs';
 
@@ -25,11 +25,11 @@ import { Observable, tap } from 'rxjs';
 })
 export class CSVUploaderComponent {
   @Output()
-  public csvUploaded = new EventEmitter<{ [key: string]: string | number }[]>();
+  public csvUploaded = new EventEmitter<{ [key: string]: string }[]>();
 
   public form: FormGroup;
   public faTimesCircle = faTimesCircle;
-  public currentFile: { [key: string]: string | number }[] | null = null;
+  public currentFile: { [key: string]: string }[] | null = null;
 
   constructor(
     formBuilder: FormBuilder,
@@ -98,24 +98,18 @@ export class CSVUploaderComponent {
   /**
    * Parse and save the file from the local file.
    */
-  private useLocalFile(
-    file: File
-  ): Observable<{ [key: string]: string | number }[]> {
-    return this.csvParser.parseFile<{ [key: string]: string | number }>(file);
+  private useLocalFile(file: File): Observable<{ [key: string]: string }[]> {
+    return this.csvParser.parseFile<{ [key: string]: string }>(file);
   }
 
   /**
    * Parse and save the file from the remote URL.
    */
-  private useRemoteUrl(
-    url: string
-  ): Observable<{ [key: string]: string | number }[]> {
-    return this.csvParser
-      .parseURL<{ [key: string]: string | number }>(url)
-      .pipe(
-        tap(() => {
-          this.fileHistory.add(url);
-        })
-      );
+  private useRemoteUrl(url: string): Observable<{ [key: string]: string }[]> {
+    return this.csvParser.parseURL<{ [key: string]: string }>(url).pipe(
+      tap(() => {
+        this.fileHistory.add(url);
+      })
+    );
   }
 }

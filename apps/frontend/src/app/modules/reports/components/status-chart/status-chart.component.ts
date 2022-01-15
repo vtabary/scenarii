@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
-import {
-  ReportsRegistryService,
-  ScenariosRegistryService,
-} from '../../../shared/public-api';
+import { ScenariosRegistryService } from '../../../shared/public-api';
 import { getStatusReport } from '../helpers/results';
 
 @Component({
@@ -21,11 +18,8 @@ export class StatusChartComponent {
     responsive: true,
   };
 
-  constructor(
-    scenarios: ScenariosRegistryService,
-    reports: ReportsRegistryService
-  ) {
-    const statusReport = getStatusReport(reports.getAll(), scenarios.length);
+  constructor(scenarios: ScenariosRegistryService) {
+    const statusReport = getStatusReport(scenarios.getAll());
 
     this.chartData.labels = statusReport.map((report) => report.label);
     this.chartData.datasets = statusReport.reduce(

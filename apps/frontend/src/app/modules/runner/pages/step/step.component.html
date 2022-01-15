@@ -12,12 +12,19 @@
   <main class="p-3 flex-auto flex flex-col">
     <div class="flex-auto justify-center items-center flex flex-col">
       <p class="md:text-xl">
-        {{ scenario.category }}
+        {{ scenario.scenario.category }}
       </p>
       <div class="text-xl md:text-3xl flex-auto flex flex-col justify-center">
-        <span>{{ scenario.message }}</span>
+        <span>{{ scenario.scenario.message }}</span>
       </div>
-      <div class="pt-5">
+    </div>
+    <div class="flex flex-row items-center">
+      <a
+        *ngIf="scenario.previous?.scenario?.id"
+        routerLink="/run/{{ scenario.previous?.scenario?.id }}"
+        >Back</a
+      >
+      <div class="flex-grow text-center">
         <button
           type="submit"
           class="mr-5 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
@@ -34,10 +41,8 @@
           It's valid
         </button>
       </div>
-    </div>
-    <div class="">
-      <a *ngIf="scenario.previous" routerLink="/run/{{ scenario.previous?.id }}"
-        >Back</a
+      <a routerLink="/run/{{ scenario.next?.scenario?.id || 'done' }}"
+        >Skip for now</a
       >
     </div>
   </main>

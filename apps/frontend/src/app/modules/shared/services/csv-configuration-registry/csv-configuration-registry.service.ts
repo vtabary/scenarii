@@ -4,12 +4,14 @@ import { DataManagerService } from '../data-manager/data-manager.service';
 
 export interface ICSVConfiguration {
   columns: {
-    identifier?: string;
-    message?: string;
+    identifier: string;
+    message: string;
     category?: string;
     subcategory?: string;
     comment?: string;
     dependency?: string;
+    valid?: string;
+    testerComment?: string;
   };
 }
 
@@ -17,7 +19,9 @@ export interface ICSVConfiguration {
   providedIn: 'root',
 })
 export class CSVConfigurationRegistryService {
-  private configuration: ICSVConfiguration = { columns: {} };
+  private configuration: ICSVConfiguration = {
+    columns: { identifier: 'id', message: 'message' },
+  };
   public registryUpdated = new BehaviorSubject<ICSVConfiguration>(
     this.configuration
   );
@@ -59,8 +63,8 @@ export class CSVConfigurationRegistryService {
     value: ICSVConfiguration[typeof id]
   ): void {
     this.configuration[id] = value;
-    this.registryUpdated.next(this.getAll());
     this.dataManager.set('csv-configuration', this.configuration);
+    this.registryUpdated.next(this.getAll());
   }
 
   /**
@@ -68,7 +72,21 @@ export class CSVConfigurationRegistryService {
    */
   public reset(configuration: ICSVConfiguration): void {
     this.configuration = configuration;
-    this.registryUpdated.next(this.getAll());
     this.dataManager.set('csv-configuration', this.configuration);
+    this.registryUpdated.next(this.getAll());
+  }
+
+  /**
+   * Clear the registry
+   */
+  public clear(): void {
+    this.configuration = {
+      columns: {
+        identifier: 'id',
+        message: 'message',
+      },
+    };
+    this.dataManager.set('csv-configuration', this.configuration);
+    this.registryUpdated.next(this.getAll());
   }
 }

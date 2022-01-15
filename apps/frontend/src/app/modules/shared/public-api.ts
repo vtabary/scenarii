@@ -3,12 +3,12 @@
  */
 export { IScenario } from './models/scenario';
 export { IReport } from './models/report';
+export { IScenarioReport } from './services/scenarios-registry/scenarios-registry.service';
 
 /**
  * Services
  */
 export { ScenariosRegistryService } from './services/scenarios-registry/scenarios-registry.service';
-export { ReportsRegistryService } from './services/reports-registry/reports-registry.service';
 export {
   CSVConfigurationRegistryService,
   ICSVConfiguration,

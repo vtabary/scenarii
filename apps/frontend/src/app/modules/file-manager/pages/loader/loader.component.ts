@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {
-  IScenario,
   ScenariosRegistryService,
   ICSVConfiguration,
   CSVConfigurationRegistryService,
+  IScenarioReport,
 } from '../../../shared/public-api';
 
 @Component({
@@ -12,7 +12,7 @@ import {
   styleUrls: ['./loader.component.css'],
 })
 export class LoaderComponent {
-  public currentFile: { [key: string]: string | number }[] | null = null;
+  public currentFile: { [key: string]: string }[] | null = null;
 
   public isRunning = false;
 
@@ -23,7 +23,7 @@ export class LoaderComponent {
     this.isRunning = this.scenarios.getAll().length > 0;
   }
 
-  public onScenarios(scenarios: IScenario[]) {
+  public onScenarios(scenarios: IScenarioReport[]) {
     this.currentFile = null;
     this.scenarios.reset(scenarios);
     this.isRunning = true;

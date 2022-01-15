@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import {
-  ReportsRegistryService,
-  ScenariosRegistryService,
-} from '../../../shared/public-api';
+import { ScenariosRegistryService } from '../../../shared/public-api';
 import { IResolvedScenario } from '../../models/scenario';
 
 @Component({
@@ -21,7 +18,6 @@ export class StepComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private scenarios: ScenariosRegistryService,
-    private reports: ReportsRegistryService,
     private router: Router
   ) {
     this.scenario$ = this.activatedRoute.data.pipe(
@@ -36,36 +32,30 @@ export class StepComponent {
   }
 
   public onValidate(): void {
-    if (!this.scenario?.id) {
+    if (!this.scenario?.scenario.id) {
       return;
     }
 
-    this.reports.set({
-      scenarioId: this.scenario.id,
-      comment: '',
-      valid: true,
-    });
+    this.scenario.report.valid = true;
+    this.scenarios.set(this.scenario);
 
     this.goToNextPage();
   }
 
   public onFail(): void {
-    if (!this.scenario?.id) {
+    if (!this.scenario?.scenario.id) {
       return;
     }
 
-    this.reports.set({
-      scenarioId: this.scenario.id,
-      comment: '',
-      valid: false,
-    });
+    this.scenario.report.valid = false;
+    this.scenarios.set(this.scenario);
 
     this.goToNextPage();
   }
 
   private goToNextPage(): void {
-    if (this.scenario?.next?.id) {
-      this.router.navigate(['/run', this.scenario.next?.id]);
+    if (this.scenario?.next?.scenario.id) {
+      this.router.navigate(['/run', this.scenario.next?.scenario.id]);
       return;
     }
 

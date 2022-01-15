@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { ResetComponent } from './reset.component';
+import { CSVExporterComponent } from './csv-exporter.component';
 
-describe('ResetComponent', () => {
-  let component: ResetComponent;
-  let fixture: ComponentFixture<ResetComponent>;
+describe('CSVExporterComponent', () => {
+  let component: CSVExporterComponent;
+  let fixture: ComponentFixture<CSVExporterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResetComponent],
+      declarations: [CSVExporterComponent],
       imports: [FontAwesomeModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResetComponent);
+    fixture = TestBed.createComponent(CSVExporterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IScenario } from '../../models/scenario';
+import { IReport } from '../../public-api';
 import { DataManagerService } from '../data-manager/data-manager.service';
+
+export type IScenarioReport = {
+  scenario: IScenario;
+  report: IReport;
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScenariosRegistryService {
-  public registryUpdated = new BehaviorSubject<IScenario[]>([]);
-  private scenarios: IScenario[] = [];
-  private scenarioByIds: Map<string, IScenario> = new Map();
+  public registryUpdated = new BehaviorSubject<IScenarioReport[]>([]);
+  private items: IScenarioReport[] = [];
+  private itemByIds: Map<string, IScenarioReport> = new Map();
 
   constructor(private dataManager: DataManagerService) {}
 
@@ -17,44 +23,45 @@ export class ScenariosRegistryService {
    * Get a scenario by its id.
    */
   public get(id: string):
-    | (IScenario & {
+    | (IScenarioReport & {
         index: number;
       })
     | undefined {
-    const scenario = this.scenarioByIds.get(id);
+    const scenario = this.itemByIds.get(id);
     if (!scenario) {
       return undefined;
     }
 
     return {
       ...scenario,
-      index: this.scenarios.indexOf(scenario),
+      index: this.items.indexOf(scenario),
     };
   }
 
   /**
    * Return all the scenarios
    */
-  public getAll(): IScenario[] {
-    return [...this.scenarios];
+  public getAll(): IScenarioReport[] {
+    return [...this.items];
   }
 
   /**
    * Return all the scenarios by category
    */
-  public getAllByCategories(): { [category: string]: IScenario[] } {
-    return this.scenarios.reduce((acc, scenario) => {
-      acc[scenario.category || ''] = acc[scenario.category || ''] || [];
-      acc[scenario.category || ''].push(scenario);
+  public getAllByCategories(): { [category: string]: IScenarioReport[] } {
+    return this.items.reduce((acc, item) => {
+      acc[item.scenario.category || ''] =
+        acc[item.scenario.category || ''] || [];
+      acc[item.scenario.category || ''].push(item);
       return acc;
-    }, {} as { [category: string]: IScenario[] });
+    }, {} as { [category: string]: IScenarioReport[] });
   }
 
   /**
    * Check the data manager to see if there is some scenario data in it
    */
   public load(): boolean {
-    const data = this.dataManager.get<IScenario[]>('scenarios');
+    const data = this.dataManager.get<IScenarioReport[]>('scenarios');
     if (!data || data.length === 0) {
       return false;
     }
@@ -64,18 +71,60 @@ export class ScenariosRegistryService {
   }
 
   /**
+   * Update a single scenario
+   */
+  public set(scenario: IScenarioReport): void {
+    if (this.itemByIds.has(scenario.scenario.id)) {
+      this.itemByIds.set(scenario.scenario.id, scenario);
+      this.items[this.items.indexOf(scenario)] = scenario;
+    } else {
+      this.addItem(scenario);
+    }
+
+    this.save();
+  }
+
+  /**
+   * Remove a scenario
+   */
+  public delete(id: string): void {
+    if (this.itemByIds.has(id)) {
+      return;
+    }
+
+    this.items = this.items.splice(
+      this.items.findIndex((item) => item.scenario.id === id),
+      1
+    );
+
+    this.itemByIds.delete(id);
+    this.save();
+  }
+
+  /**
    * Clear the registry and set the new scenarios.
    */
-  public reset(scenarios: IScenario[]): void {
-    this.clear();
-    this.addScenarios(scenarios);
+  public reset(scenarios: IScenarioReport[]): void {
+    this.items = [];
+    this.itemByIds.clear();
+    this.addItems(scenarios);
+
+    this.save();
+  }
+
+  /**
+   * Clear the registry and set the new scenarios.
+   */
+  public save(): void {
+    this.dataManager.set('scenarios', this.items);
+    this.registryUpdated.next(this.getAll());
   }
 
   /**
    * Get the next scenario from the given scenario, or undefined if none is existing
    */
   public next(id: string):
-    | (IScenario & {
+    | (IScenarioReport & {
         index: number;
       })
     | undefined {
@@ -84,15 +133,15 @@ export class ScenariosRegistryService {
     if (!scenario) {
       return undefined;
     }
-    console.log(scenario.index, this.scenarios[scenario.index + 1]);
-    return this.get(this.scenarios[scenario.index + 1]?.id);
+
+    return this.get(this.items[scenario.index + 1]?.scenario.id);
   }
 
   /**
    * Get the previous scenario from the given scenario, or undefined if none is existing
    */
   public previous(id: string):
-    | (IScenario & {
+    | (IScenarioReport & {
         index: number;
       })
     | undefined {
@@ -102,41 +151,35 @@ export class ScenariosRegistryService {
       return undefined;
     }
 
-    return this.get(this.scenarios[scenario.index - 1]?.id);
+    return this.get(this.items[scenario.index - 1]?.scenario.id);
   }
 
   /**
    * Get the number of scenarios in the registry
    */
   public get length(): number {
-    return this.scenarios.length;
+    return this.items.length;
   }
 
-  private addScenarios(scenarios: IScenario[]): void {
-    scenarios.forEach((scenario) => this.addScenario(scenario));
-
-    this.registryUpdated.next(this.getAll());
-    this.dataManager.set('scenarios', this.scenarios);
+  private addItems(scenarios: IScenarioReport[]): void {
+    scenarios.forEach((scenario) => this.addItem(scenario));
   }
 
-  private addScenario(scenario: IScenario): void {
-    if (!scenario.id) {
+  private addItem(item: IScenarioReport): void {
+    if (!item.scenario.id) {
       return;
     }
 
     // Force the category, the subcategory and the comment to be string or null
-    const item = Object.assign(
+    item.scenario = Object.assign(
       { category: null, subcategory: null, comment: null },
-      scenario
+      item.scenario
     );
-    this.scenarios.push(item);
-    this.scenarioByIds.set(scenario.id, item);
-  }
-
-  private clear(): void {
-    this.scenarios = [];
-    this.scenarioByIds.clear();
-    this.dataManager.delete('scenarios');
-    this.registryUpdated.next(this.getAll());
+    item.report = {
+      valid: item.report.valid,
+      comment: item.report.comment,
+    };
+    this.items.push(item);
+    this.itemByIds.set(item.scenario.id, item);
   }
 }

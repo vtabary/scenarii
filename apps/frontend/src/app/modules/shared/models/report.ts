@@ -1,5 +1,4 @@
 export interface IReport {
-  scenarioId: string;
-  valid: boolean;
-  comment: string;
+  valid: boolean | undefined;
+  comment: string | null;
 }

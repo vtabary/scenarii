@@ -7,10 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change how the scenario and the reports are stored in the local storage. You may have to reset your local storage to be able to use the new version.
+
 ### Added
 
+- Users can now export the scenario and reports as a CSV file
 - Display report status in scenario list
 - User can filter scenarios by status in scenario list
+
+### Fixed
+
+- The user can now cancel the CSV upload during the configuration configuration
+- The user can now skip a scenario during the run
 
 ## [0.5.0] - 2022-01-13
 

@@ -1,8 +1,8 @@
-import { IScenario } from '../../shared/public-api';
+import { IScenarioReport } from '../../shared/public-api';
 
-export interface IResolvedScenario extends IScenario {
+export interface IResolvedScenario extends IScenarioReport {
   index: number;
   length: number;
-  next?: IScenario & { index: number };
-  previous?: IScenario & { index: number };
+  next?: IScenarioReport & { index: number };
+  previous?: IScenarioReport & { index: number };
 }

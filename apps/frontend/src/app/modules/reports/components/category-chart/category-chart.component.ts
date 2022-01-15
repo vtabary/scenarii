@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
-import { IReport } from '../../../shared/models/report';
 import {
-  IScenario,
-  ReportsRegistryService,
   ScenariosRegistryService,
+  IScenarioReport,
 } from '../../../shared/public-api';
 import { getStatusReport, IStatusReport } from '../helpers/results';
 
@@ -30,10 +28,7 @@ export class CategoryChartComponent {
     },
   };
 
-  constructor(
-    scenarios: ScenariosRegistryService,
-    private reports: ReportsRegistryService
-  ) {
+  constructor(scenarios: ScenariosRegistryService) {
     const categories = scenarios.getAllByCategories();
 
     this.chartData.datasets = this.getCategoryStatuses(categories);
@@ -51,11 +46,11 @@ export class CategoryChartComponent {
   }
 
   private getCategoryStatuses(categories: {
-    [category: string]: IScenario[];
+    [category: string]: IScenarioReport[];
   }): IStatusReport {
     return Object.keys(categories).reduce(
       (acc, category, index) => {
-        const categoryStatus = this.getCategoryStatus(categories[category]);
+        const categoryStatus = getStatusReport(categories[category]);
 
         acc.map(
           (state, stateIndex) =>
@@ -84,15 +79,5 @@ export class CategoryChartComponent {
         },
       ] as IStatusReport
     );
-  }
-
-  private getCategoryStatus(categoryScenarios: IScenario[]): IStatusReport {
-    const categoryReports = categoryScenarios
-      .map((scenario) => this.reports.get(scenario.id))
-      .filter(
-        (report): report is IReport & { index: number } => report !== undefined
-      );
-
-    return getStatusReport(categoryReports, categoryScenarios.length);
   }
 }

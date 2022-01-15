@@ -5,7 +5,6 @@ import { AppComponent } from './components/app/app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import {
   CSVConfigurationRegistryService,
-  ReportsRegistryService,
   ScenariosRegistryService,
 } from './modules/shared/public-api';
 import { SharedModule } from './modules/shared/shared.module';
@@ -13,12 +12,10 @@ import { SharedModule } from './modules/shared/shared.module';
 const factories = {
   loadData: (
     scenarios: ScenariosRegistryService,
-    reports: ReportsRegistryService,
     csvConfiguration: CSVConfigurationRegistryService
   ): (() => void) => {
     const f = () => {
       scenarios.load();
-      reports.load();
       csvConfiguration.load();
     };
     return f;
@@ -31,11 +28,7 @@ const factories = {
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [
-        ScenariosRegistryService,
-        ReportsRegistryService,
-        CSVConfigurationRegistryService,
-      ],
+      deps: [ScenariosRegistryService, CSVConfigurationRegistryService],
       useFactory: factories.loadData,
     },
   ],

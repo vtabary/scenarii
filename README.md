@@ -13,10 +13,11 @@ This project aims to help the developer to do e2e testing manually on their appl
 - Reports are generated from the results
 - All scenarios are listed and can be viewed at once
 - Filter the list of scenarios
+- The scenarios can be exported into a CSV File
 
 ## CSV details
 
-The CSV file must, at least, have the following columns:
+The CSV file must, at least, have the following columns, serapated by a semicolon:
 
 - A **unique identifier** to identify each scenario
 - A **message** to describe the scenario
@@ -49,7 +50,6 @@ nx build frontend
 
 ## TODO
 
-- Export the scenarios into a CSV File
 - Let the user add some comments on a failed scenario
 - Let the user to export the reports
 - Add the tester comments to the scenario list

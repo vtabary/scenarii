@@ -1,8 +1,8 @@
 <section
   *ngIf="scenario"
   class="shadow-sm m-3 p-3 rounded bg-white flex flex-row"
-  [class.bg-red-100]="status === 'error'"
-  [class.bg-green-100]="status === 'success'"
+  [class.bg-red-100]="scenario.report.valid === false"
+  [class.bg-green-100]="scenario.report.valid === true"
 >
   <div
     [ngSwitch]="status"
@@ -30,16 +30,16 @@
   </div>
   <div>
     <span class="text-sm text-gray-400 italic">
-      <ng-container *ngIf="scenario.category"
-        ><span>{{ scenario.category }}</span> ></ng-container
+      <ng-container *ngIf="scenario.scenario.category"
+        ><span>{{ scenario.scenario.category }}</span> ></ng-container
       >
-      <ng-container *ngIf="scenario.subcategory"
-        ><span>{{ scenario.subcategory }}</span> ></ng-container
+      <ng-container *ngIf="scenario.scenario.subcategory"
+        ><span>{{ scenario.scenario.subcategory }}</span> ></ng-container
       >
-      <span>{{ scenario.id }}</span>
+      <span>{{ scenario.scenario.id }}</span>
     </span>
     <h2 class="ml-2">
-      {{ scenario.message }}
+      {{ scenario.scenario.message }}
     </h2>
   </div>
 </section>

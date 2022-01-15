@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import {
   ICSVConfiguration,
-  IScenario,
+  IScenarioReport,
   ScenarioConverterService,
 } from '../../../shared/public-api';
 
@@ -25,13 +25,13 @@ import {
 })
 export class CSVConfiguratorComponent implements OnChanges {
   @Input()
-  public csvContent: { [key: string]: string | number }[] | null = null;
+  public csvContent: { [key: string]: string }[] | null = null;
 
   @Output()
   public configurationUpdated = new EventEmitter<ICSVConfiguration>();
 
   @Output()
-  public scenarios = new EventEmitter<IScenario[]>();
+  public scenarios = new EventEmitter<IScenarioReport[]>();
 
   @Output()
   public cleared = new EventEmitter<void>();
@@ -100,8 +100,8 @@ export class CSVConfiguratorComponent implements OnChanges {
   public onSubmit() {
     this.configurationUpdated.next({
       columns: {
-        identifier: this.identifier?.value,
-        message: this.message?.value,
+        identifier: this.identifier?.value || 'id',
+        message: this.message?.value || 'message',
         category: this.category?.value,
         subcategory: this.subcategory?.value,
         dependency: this.dependency?.value,
@@ -110,7 +110,7 @@ export class CSVConfiguratorComponent implements OnChanges {
     });
 
     this.scenarios.next(
-      this.scenarioConverter.convertToScenarios(this.csvContent || [])
+      this.scenarioConverter.csvToScenarios(this.csvContent || [])
     );
   }
 

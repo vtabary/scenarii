@@ -1,4 +1,4 @@
-import { IReport } from '../../../shared/public-api';
+import { IScenarioReport } from '../../../shared/public-api';
 
 export type IStatusReport = [
   {
@@ -21,13 +21,11 @@ export type IStatusReport = [
   }
 ];
 
-export const getStatusReport = (
-  reports: IReport[],
-  scenariosLength: number
-): IStatusReport => {
-  return reports.reduce(
-    (acc, report) => {
-      const index = report.valid ? 0 : 1;
+export const getStatusReport = (items: IScenarioReport[]): IStatusReport => {
+  return items.reduce(
+    (acc, item) => {
+      const index =
+        item.report.valid === undefined ? 2 : item.report.valid ? 0 : 1;
       acc[index].data[0] += 1;
       return acc;
     },
@@ -46,7 +44,7 @@ export const getStatusReport = (
       },
       {
         label: 'Pending',
-        data: [scenariosLength - reports.length],
+        data: [0],
         backgroundColor: '#FBBF24',
         hoverBackgroundColor: '#FCD34D',
       },

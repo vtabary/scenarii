@@ -25,7 +25,10 @@
     </ng-container>
 
     <ng-template #reset>
-      <scenarii-reset></scenarii-reset>
+      <div class="md:grid md:grid-cols-2 md:gap-6">
+        <scenarii-reset></scenarii-reset>
+        <scenarii-csv-exporter></scenarii-csv-exporter>
+      </div>
     </ng-template>
   </main>
 </div>

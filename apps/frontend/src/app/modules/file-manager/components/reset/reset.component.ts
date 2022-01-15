@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import {
   ScenariosRegistryService,
-  ReportsRegistryService,
   CSVConfigurationRegistryService,
 } from '../../../shared/public-api';
 
@@ -11,15 +11,15 @@ import {
   styleUrls: ['./reset.component.css'],
 })
 export class ResetComponent {
+  public faTrash = faTrash;
+
   constructor(
     private scenarios: ScenariosRegistryService,
-    private reports: ReportsRegistryService,
     private configuration: CSVConfigurationRegistryService
   ) {}
 
   public onReset() {
     this.scenarios.reset([]);
-    this.reports.reset([]);
-    this.configuration.reset({ columns: {} });
+    this.configuration.clear();
   }
 }

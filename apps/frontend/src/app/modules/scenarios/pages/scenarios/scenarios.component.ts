@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { combineLatest, map, Observable, startWith } from 'rxjs';
 import {
-  IScenario,
-  ReportsRegistryService,
+  IScenarioReport,
   ScenariosRegistryService,
 } from '../../../shared/public-api';
 
@@ -13,12 +12,11 @@ import {
   styleUrls: ['./scenarios.component.css'],
 })
 export class ScenariosComponent {
-  public scenarios$: Observable<IScenario[]>;
+  public scenarios$: Observable<IScenarioReport[]>;
   public formGroup: FormGroup;
 
   constructor(
     scenarioRegistry: ScenariosRegistryService,
-    private reportRegistry: ReportsRegistryService,
     formBuilder: FormBuilder
   ) {
     this.formGroup = formBuilder.group({
@@ -30,7 +28,6 @@ export class ScenariosComponent {
         startWith(scenarioRegistry.getAll())
       ),
       this.formGroup.valueChanges.pipe(startWith(this.formGroup.value)),
-      reportRegistry.registryUpdated.pipe(startWith(reportRegistry.getAll())),
     ]).pipe(
       map(([scenarios, formValue]) => {
         if (formValue.status === '') {
@@ -43,25 +40,23 @@ export class ScenariosComponent {
   }
 
   private filterScenarios(
-    scenarios: IScenario[],
+    scenarios: IScenarioReport[],
     status: '' | 'success' | 'error' | 'unknown'
-  ): IScenario[] {
+  ): IScenarioReport[] {
     return scenarios.filter((s) => this.isScenarioValid(s, status));
   }
 
   private isScenarioValid(
-    scenario: IScenario,
+    scenario: IScenarioReport,
     status: '' | 'success' | 'error' | 'unknown'
   ): boolean {
-    const report = this.reportRegistry.get(scenario.id);
-
     switch (status) {
       case 'success':
-        return report?.valid === true;
+        return scenario.report.valid === true;
       case 'error':
-        return report?.valid === false;
+        return scenario.report.valid === false;
       case 'unknown':
-        return !report;
+        return scenario.report.valid === undefined;
       default:
         return true;
     }
